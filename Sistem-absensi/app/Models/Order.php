@@ -11,7 +11,15 @@ class Order extends Model
 
     protected $fillable = [
         'status',
+        'name',
         'reason',
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
+
 }
+
 

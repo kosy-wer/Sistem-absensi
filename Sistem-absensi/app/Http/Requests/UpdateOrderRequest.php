@@ -5,11 +5,11 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOrderRequest extends FormRequest
-{
+ {
     public function authorize()
     {
         return true;
-    }
+   }
 
     public function rules()
     {
@@ -21,12 +21,12 @@ class StoreOrderRequest extends FormRequest
 
     public function withValidator($validator)
     {
-        $validator->after(function ($validator) {
+    $validator->after(function ($validator) {
             $status = $this->input('status');
             $reason = $this->input('reason');
 
             if ($status !== 'value1' && !is_null($reason)) {
-                $validator->errors()->add('reason', 'Reason can only be filled when status is value1.');
+$validator->errors()->add('reason', 'Reason can only be filled when status is value1.');
             }
 
             if ($status === 'value1' && is_null($reason)) {
@@ -34,7 +34,6 @@ class StoreOrderRequest extends FormRequest
             }
         });
     }
-
     public function messages()
     {
         return [
@@ -46,3 +45,7 @@ class StoreOrderRequest extends FormRequest
     }
 }
 
+~
+~
+~
+~

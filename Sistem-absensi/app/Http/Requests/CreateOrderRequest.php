@@ -5,15 +5,16 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOrderRequest extends FormRequest
-{
+ {
     public function authorize()
     {
         return true;
-    }
+   }
 
     public function rules()
     {
         return [
+            'name' => 'required|string|max:255',
             'status' => 'required|in:value1,value2,value3',
             'reason' => 'nullable|string|max:255',
         ];
@@ -21,12 +22,12 @@ class StoreOrderRequest extends FormRequest
 
     public function withValidator($validator)
     {
-        $validator->after(function ($validator) {
+   $validator->after(function ($validator) {
             $status = $this->input('status');
             $reason = $this->input('reason');
 
             if ($status !== 'value1' && !is_null($reason)) {
-                $validator->errors()->add('reason', 'Reason can only be filled when status is value1.');
+  $validator->errors()->add('reason', 'Reason can only be filled when status is value1.');
             }
 
             if ($status === 'value1' && is_null($reason)) {
@@ -34,10 +35,11 @@ class StoreOrderRequest extends FormRequest
             }
         });
     }
-
     public function messages()
     {
         return [
+            'status.required' => 'Name is required.',
+            'name.string' => 'Name must be a string.',
             'status.required' => 'Status is required.',
             'status.in' => 'Status must be one of the following: value1, value2, value3.',
             'reason.string' => 'Reason must be a string.',
@@ -45,4 +47,3 @@ class StoreOrderRequest extends FormRequest
         ];
     }
 }
-

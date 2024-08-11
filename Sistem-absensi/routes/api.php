@@ -10,7 +10,7 @@ Route::get('/user', function (Request $request) {
 })->middleware(Authenticate::using('sanctum'));
 
 
-Route::post('/orders', [OrderController::class, 'store']);
+Route::apiResource('/orders', OrderController::class);
 
 //posts
 Route::apiResource('/posts', App\Http\Controllers\Api\PostController::class);
