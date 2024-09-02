@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrderRequest;
+use App\Http\Requests\ShowOrderRequest;
+use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\OrderFailResource;
 use App\Models\Order;
@@ -41,7 +43,7 @@ class OrderController extends Controller
  * @param  mixed $name
  * @return void
  */
-public function show($name)
+    public function show(ShowOrderRequest $request ,$name)
  {
     // Find post by name
     $order = Order::where('name', $name)->first();
@@ -51,11 +53,11 @@ public function show($name)
     } else {
 
             $errorData = [
-        'type' => '/errors/incorrect-user-pass',
-        'title' => 'Incorrect username or password.',
+        'type' => '/errors/not-found',
+        'title' => 'name not found',
         'status' => 401,
-        'detail' => 'Authentication failed due to incorrect username or password.',
-        'instance' => '/login/log/abc123',
+        'detail' => 'user is not found',
+        'instance' => '/orders/name',
     ];
             return (new OrderFailResource((object) $errorData))->response()->setStatusCode(401);
 
@@ -70,7 +72,7 @@ public function show($name)
  * @param  mixed $name
  * @return void
  */
-public function update(Request $request, $name)
+public function update(UpdateOrderRequest $request, $name)
 {
     // find post by name
     $order = Order::where('name', $name)->firstOrFail();
