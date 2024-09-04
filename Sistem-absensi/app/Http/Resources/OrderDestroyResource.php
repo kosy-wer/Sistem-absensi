@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrderResource extends JsonResource
+class OrderDestroyResource extends JsonResource
 {
     private $success;
     private $message;
@@ -12,15 +12,13 @@ class OrderResource extends JsonResource
     /**
      * __construct
      *
-     * @param  mixed $status
-     * * @param  mixed $message
-     * @param  mixed $resource
+     * @param  mixed $success
+     * @param  mixed $message
      * @return void
      */
-
-    public function __construct($success, $message, $resource)
+    public function __construct($success, $message)
     {
-        parent::__construct($resource);
+        parent::__construct(null);
         $this->success = $success;
         $this->message = $message;
     }
@@ -31,13 +29,11 @@ class OrderResource extends JsonResource
      * @param  mixed $request
      * @return array
      */
-
     public function toArray($request): array
     {
         return [
             'success' => $this->success,
             'message' => $this->message,
-            'data'    => $this->resource,
         ];
     }
 }

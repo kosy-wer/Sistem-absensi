@@ -6,6 +6,7 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\ShowOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
+use App\Http\Resources\OrderDestroyResource;
 use App\Http\Resources\OrderFailResource;
 use App\Models\Order;
 
@@ -88,6 +89,21 @@ public function update(UpdateOrderRequest $request, $name)
     return new OrderResource(true, 'Data Post Berhasil Diubah!', $order);
 }
 
+
+/**
+     * destroy
+     *
+     * @param  mixed $id
+     * @return void                                                        */
+    public function destroy($name)
+    {
+
+        $order = Order::where('name', $name)->firstOrFail();
+        $order->delete();
+
+        return new OrderDestroyResource(true, 'Order deleted successfully.');
+
+    }
 
 }
 
