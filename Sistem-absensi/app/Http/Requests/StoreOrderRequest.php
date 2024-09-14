@@ -14,23 +14,23 @@ class StoreOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => 'required|in:value1,value2,value3',
-            'reason' => 'nullable|string|max:255',
+            'keterangan' => 'required|in:masuk,sakit,absen',
+            'alasan' => 'nullable|string|max:255',
         ];
     }
 
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            $status = $this->input('status');
-            $reason = $this->input('reason');
+            $keterangan = $this->input('keterangan');
+            $alasan = $this->input('alasan');
 
-            if ($status !== 'value1' && !is_null($reason)) {
-                $validator->errors()->add('reason', 'Reason can only be filled when status is value1.');
+            if ($keterangan !== 'absen' && !is_null($alasan)) {
+                $validator->errors()->add('alasan', 'Alasan hanya bisa di isi jika keterangan absen.');
             }
 
-            if ($status === 'value1' && is_null($reason)) {
-                $validator->errors()->add('reason', 'Reason is required when status is value1.');
+            if ($keterangan === 'absen' && is_null($alasan)) {
+                $validator->errors()->add('alasan', 'Jika keterangan absen maka harus mengisi alasan.');
             }
         });
     }
@@ -38,10 +38,10 @@ class StoreOrderRequest extends FormRequest
     public function messages()
     {
         return [
-            'status.required' => 'Status is required.',
-            'status.in' => 'Status must be one of the following: value1, value2, value3.',
-            'reason.string' => 'Reason must be a string.',
-            'reason.max' => 'Reason may not be greater than 255 characters.',
+            'keterangan.required' => 'Status is required.',
+            'keterangan.in' => 'Status must be one of the following: masuk, izin, absen.',
+            'alasan.string' => 'Reason must be a string.',
+            'alasan.max' => 'Reason may not be greater than 255 characters.',
         ];
     }
 }

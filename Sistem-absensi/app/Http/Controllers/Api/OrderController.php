@@ -16,9 +16,9 @@ class OrderController extends Controller
     public function store(StoreOrderRequest $request)
     {
         $order = Order::create([
-            'name'     => $request->name,
-            'reason'   => $request->reason,
-            'status'   => $request->status,
+            'nama'     => $request->nama,
+            'keterangan'   => $request->keterangan,
+            'alasan'   => $request->alasan,
         ]);
 
         return new OrderResource(true, 'Data Order Berhasil Ditambahkan!', $order);
