@@ -3,38 +3,28 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Student;
+use App\Http\Requests\StoreAttendanceRequest;
 use App\Models\Attendance;
+use App\Models\Student;
 use App\Http\Resources\AttendanceResource;
 
 class AttendanceController extends Controller
 {
-    /**
-     * Store a newly created attendance in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StoreAttendanceRequest $request)
     {
-        // Validasi request
-        $validatedData = $request->validate([
-            'student_id' => 'required|exists:students,id',
-            'tanggal_absen' => 'required|date',
-            'status_absen' => 'required|in:hadir,sakit,izin,alpha',
-        ]);
+        // Cari student berdasarkan nama dan kelas
+        $student = Student::where('nama', $request->student_name)
+                          ->where('kelas', $request->kelas)
+                          ->first();
 
         // Simpan attendance ke database
         $attendance = Attendance::create([
-            'student_id' => $validatedData['student_id'],
-            'tanggal_absen' => $validatedData['tanggal_absen'],
-            'status_absen' => $validatedData['status_absen'],
+            'student_id' => $student->id,
+            'tanggal_absen' => $request->tanggal_absen,
+            'status_absen' => $request->status_absen,
         ]);
 
-
         return new AttendanceResource($attendance);
-
-
     }
 }
 
