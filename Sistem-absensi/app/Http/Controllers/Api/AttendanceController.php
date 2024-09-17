@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAttendanceRequest;
+use App\Http\Requests\IndexAttendanceRequest;
 use App\Models\Attendance;
 use App\Models\Student;
 use App\Http\Resources\AttendanceResource;
@@ -26,5 +27,26 @@ class AttendanceController extends Controller
 
         return new AttendanceResource($attendance);
     }
+
+
+
+    public function index(IndexAttendanceRequest $request)
+ {
+    // Cari siswa berdasarkan nama dan kelas
+    $student = Student::where('nama', $request->student_name)
+                      ->where('kelas', $request->kelas)
+                      ->first();
+
+    if (!$student) {
+        return response()->json(['message' => 'Student not found'], 404);
+    }
+
+    // Ambil data absensi berdasarkan student_id
+    $attendance = Attendance::where('student_id', $student->id)->get();
+
+    return AttendanceResource::collection($attendance);
+ }
+
+
 }
 

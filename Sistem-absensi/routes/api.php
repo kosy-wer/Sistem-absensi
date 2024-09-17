@@ -10,5 +10,8 @@ Route::get('/user', function (Request $request) {
 })->middleware(Authenticate::using('sanctum'));
 
 
-Route::apiResource('/attendances', AttendanceController::class);
+Route::post('/attendances', [AttendanceController::class, 'store']);
+Route::get('/attendances', [AttendanceController::class, 'index']);
+
+
 
