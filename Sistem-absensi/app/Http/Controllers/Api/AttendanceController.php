@@ -46,5 +46,15 @@ class AttendanceController extends Controller
     return AttendanceResource::collection($attendance);
  }
 
+
+    public function show()
+ {
+    // Ambil semua data absensi
+    $attendance = Attendance::all();
+
+    return AttendanceResource::collection($attendance);
+ }
+
+
 }
 

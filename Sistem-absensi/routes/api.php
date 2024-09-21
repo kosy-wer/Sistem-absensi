@@ -11,6 +11,7 @@ Route::get('/user', function (Request $request) {
 
 
 Route::post('/attendances', [AttendanceController::class, 'store']);
+Route::get('/attendances', [AttendanceController::class, 'show']);
 Route::get('/attendances/{name}/{class}', [AttendanceController::class, 'index']);
 
 
