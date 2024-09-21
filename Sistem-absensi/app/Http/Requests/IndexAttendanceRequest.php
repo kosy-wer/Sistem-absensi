@@ -11,7 +11,7 @@ class IndexAttendanceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; // Set to true jika tidak ada otorisasi khusus
+        return true;
     }
 
     /**
@@ -20,8 +20,19 @@ class IndexAttendanceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'student_name' => 'required|string|exists:students,nama', // Validasi nama harus ada di tabel students
-            'kelas'        => 'required|string|exists:students,kelas', // Validasi kelas harus ada di tabel students
+            'name'  => 'required|string|exists:students,nama',  // Validasi nama harus ada di tabel students
+            'class' => 'required|string|exists:students,kelas', // Validasi kelas harus ada di tabel students
+        ];
+    }
+
+    /**
+     * Retrieve the data to be validated from the route parameters.
+     */
+    public function validationData()
+    {
+        return [
+            'name'  => $this->route('name'),
+            'class' => $this->route('class'),
         ];
     }
 }

@@ -29,12 +29,11 @@ class AttendanceController extends Controller
     }
 
 
-
     public function index(IndexAttendanceRequest $request)
- {
+{
     // Cari siswa berdasarkan nama dan kelas
-    $student = Student::where('nama', $request->student_name)
-                      ->where('kelas', $request->kelas)
+    $student = Student::where('nama', $request->name)
+                      ->where('kelas', $request->class)
                       ->first();
 
     if (!$student) {
@@ -46,7 +45,6 @@ class AttendanceController extends Controller
 
     return AttendanceResource::collection($attendance);
  }
-
 
 }
 
