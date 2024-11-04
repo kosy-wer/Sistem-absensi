@@ -13,16 +13,15 @@ class AttendanceController extends Controller
 {
     public function store(StoreAttendanceRequest $request)
     {
-        // Cari student berdasarkan nama dan kelas
-        $student = Student::where('nama', $request->student_name)
-                          ->where('kelas', $request->kelas)
+        $student = Student::where('name', $request->name)
+                          ->where('class', $request->class)
                           ->first();
 
         // Simpan attendance ke database
         $attendance = Attendance::create([
             'student_id' => $student->id,
-            'tanggal_absen' => $request->tanggal_absen,
-            'status_absen' => $request->status_absen,
+            'date' => $request->date,
+            'status' => $request->status,
         ]);
 
         return new AttendanceResource($attendance);
@@ -31,9 +30,8 @@ class AttendanceController extends Controller
 
     public function index(IndexAttendanceRequest $request)
 {
-    // Cari siswa berdasarkan nama dan kelas
-    $student = Student::where('nama', $request->name)
-                      ->where('kelas', $request->class)
+    $student = Student::where('name', $request->name)
+                      ->where('class', $request->class)
                       ->first();
 
     if (!$student) {

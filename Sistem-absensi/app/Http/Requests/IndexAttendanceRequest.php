@@ -20,8 +20,8 @@ class IndexAttendanceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'  => 'required|string|exists:students,nama',  // Validasi nama harus ada di tabel students
-            'class' => 'required|string|exists:students,kelas', // Validasi kelas harus ada di tabel students
+            'name'  => 'required|string|exists:students,name',  // Validasi nama harus ada di tabel students
+            'class' => 'required|string|exists:students,class', // Validasi kelas harus ada di tabel students
         ];
     }
 

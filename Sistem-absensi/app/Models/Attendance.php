@@ -23,8 +23,8 @@ class Attendance extends Model
      */
     protected $fillable = [
         'student_id',
-        'tanggal_absen',
-        'status_absen',
+        'date',
+        'status',
     ];
 
     /**
@@ -33,7 +33,7 @@ class Attendance extends Model
      * @var array
      */
     protected $casts = [
-        'tanggal_absen' => 'date',
+        'date' => 'date',
     ];
 
     /**

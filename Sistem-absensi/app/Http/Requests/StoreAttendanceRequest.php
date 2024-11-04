@@ -15,34 +15,34 @@ class StoreAttendanceRequest extends FormRequest
     public function rules()
     {
         return [
-            'student_name' => 'required|string',
-            'kelas' => 'required|string',
-            'tanggal_absen' => 'required|date',
-            'status_absen' => 'required|in:hadir,sakit,izin,alpha',
+            'name' => 'required|string',
+            'class' => 'required|string',
+            'date' => 'required|date',
+            'status' => 'required|in:hadir,sakit,izin,alpha',
         ];
     }
 
     public function messages()
     {
         return [
-            'student_name.required' => 'Nama siswa harus diisi.',
-            'kelas.required' => 'Kelas harus diisi.',
-            'tanggal_absen.required' => 'Tanggal absen harus diisi.',
-            'tanggal_absen.date' => 'Format tanggal absen tidak valid.',
-            'status_absen.required' => 'Status absen harus diisi.',
-            'status_absen.in' => 'Status absen harus salah satu dari: hadir, sakit, izin, alpha.',
+            'name.required' => 'Nama siswa harus diisi.',
+            'class.required' => 'Kelas harus diisi.',
+            'date.required' => 'Tanggal absen harus diisi.',
+            'date.date' => 'Format tanggal absen tidak valid.',
+            'status.required' => 'Status absen harus diisi.',
+            'status.in' => 'Status absen harus salah satu dari: hadir, sakit, izin, alpha.',
         ];
     }
 
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            $student = Student::where('nama', $this->student_name)
-                              ->where('kelas', $this->kelas)
+            $student = Student::where('name', $this->name)
+                              ->where('class', $this->class)
                               ->first();
 
             if (!$student) {
-                $validator->errors()->add('student_name', 'Siswa tidak ditemukan di kelas ini.');
+                $validator->errors()->add('name', 'Siswa tidak ditemukan di kelas ini.');
             }
         });
     }
