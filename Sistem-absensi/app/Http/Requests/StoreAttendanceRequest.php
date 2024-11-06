@@ -40,10 +40,10 @@ class StoreAttendanceRequest extends FormRequest
             $student = Student::where('name', $this->name)
                               ->where('class', $this->class)
                               ->first();
-
             if (!$student) {
-                $validator->errors()->add('name', 'Siswa tidak ditemukan di kelas ini.');
-            }
+            $validator->errors()->add('name', "Siswa dengan nama '{$this->name}' di kelas '{$this->class}' tidak ditemukan.");
+        }
+
         });
     }
 }
