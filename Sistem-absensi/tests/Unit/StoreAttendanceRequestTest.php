@@ -170,6 +170,31 @@ class StoreAttendanceRequestTest extends TestCase
     $this->assertTrue($validator->passes());
     $this->assertEmpty($validator->errors()->all());
 }
+    public function test_validation_passes_with_invalid_data()
+{
+    $data = [
+        'name' => 'Invalid',  // Nilai yang akan kita cek
+        'class' => 'XII-Z',   // Nilai kelas yang juga kita cek
+        'date' => '2024-10-31',
+        'status' => 'hadir',
+    ];
+
+    // Simulasikan request dengan data yang sesuai
+    $request = new StoreAttendanceRequest();
+    $request->merge($data); // Memasukkan data ke dalam request
+
+    // Act: Buat validator menggunakan rules dan messages dari StoreAttendanceRequest
+    $validator = Validator::make($request->all(), $request->rules(), $request->messages());
+    $request->withValidator($validator);
+
+
+    // Pesan error yang diharapkan menggunakan data dinamis
+    $expectedError = "Siswa dengan nama '{$data['name']}' di kelas '{$data['class']}' tidak ditemukan.";
+
+    // Assert: Validasi harus gagal dengan pesan error yang sesuai
+    $this->assertFalse($validator->passes());
+    $this->assertEquals($expectedError, $validator->errors()->first('name'));
+}
 
 
 
